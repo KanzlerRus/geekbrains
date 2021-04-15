@@ -17,7 +17,7 @@ public class HomeWorkApp {
     private static void checkSumSign() {
         int a = 5;
         int b = 10;
-        String result = a+b>=0 ? "Сумма положительная" : "Сумма отрицательная";
+        String result = (a+b >= 0) ? "Сумма положительная" : "Сумма отрицательная";
         System.out.println(result);
     }
 
