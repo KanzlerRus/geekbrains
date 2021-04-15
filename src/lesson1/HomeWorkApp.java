@@ -17,16 +17,16 @@ public class HomeWorkApp {
     private static void checkSumSign() {
         int a = 5;
         int b = 10;
-        String result = (a+b >= 0) ? "Сумма положительная" : "Сумма отрицательная";
+        String result = (a + b >= 0) ? "Сумма положительная" : "Сумма отрицательная";
         System.out.println(result);
     }
 
     private static void printColor() {
         int value = 7;
         String result;
-        if(value <= 0)
+        if (value <= 0)
             result = "Красный";
-        else if(value > 0 && value<=100)
+        else if (value <= 100)
             result = "Желтый";
         else
             result = "Зеленый";
@@ -36,7 +36,7 @@ public class HomeWorkApp {
     private static void compareNumbers() {
         int a = 5;
         int b = 7;
-        String result = a>=b ? "a>=b" : "a<b";
+        String result = (a >= b) ? "a>=b" : "a<b";
         System.out.println(result);
     }
 }
