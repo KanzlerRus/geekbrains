@@ -23,7 +23,7 @@ public class Lesson2 {
     }
 
     private static boolean isNegative(int a) {
-        return (a < 0) ? true : false;
+        return (a < 0);
     }
 
     private static void multiplyPrint(String str, int n) {
