@@ -14,7 +14,7 @@ public class Lesson2 {
     }
 
     private static boolean isSumFrom10To20(int a, int b) {
-        return ((a + b >= 10) && (a + b <= 20)) ? true : false;
+        return ((a + b >= 10) && (a + b <= 20));
     }
 
     private static void checkToPositive(int a) {
