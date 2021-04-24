@@ -146,7 +146,7 @@ public class Lesson4 {
 
     // блокировка хода компьютера , где number - кол-во в ряд DOT_X
     private static boolean blockingTurnAi(int i, int j, int number){
-        int zx = 0;
+        int zx = 0;         // дополнительный параметр корректировки для кол-ва DOT_X = 3
 
         if (number == 1) {
             zx = 2;
@@ -180,12 +180,13 @@ public class Lesson4 {
                 return true;
             }
             // блокировка по диагонали справа на лево
+            // TODO : исправить код
         } else if (checkWinXYRightLeft(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
-            if (i + 2 < SIZE && j - 2 >= 0 & map[i + 2][j - 2] == DOT_EMPTY) {
-                map[i + 2][j - 2] = DOT_O;
+            if (i + number + zx < SIZE && j - number - zx >= 0 & map[i + number + zx][j - number - zx] == DOT_EMPTY) {
+                map[i + number + zx][j - number - zx] = DOT_O;
                 return true;
-            } else if (i - 2 <= 0 && j + 2 < SIZE && map[i - 2][j + 2] == DOT_EMPTY) {
-                map[i - 2][j + 2] = DOT_O;
+            } else if (i - number <= 0 && j + number < SIZE && map[i - number][j + number] == DOT_EMPTY) {
+                map[i - number][j + number] = DOT_O;
                 return true;
             }
         }
