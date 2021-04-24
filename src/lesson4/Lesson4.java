@@ -125,7 +125,7 @@ public class Lesson4 {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 // блокировка хода АИ , если уже стоят 3 DOT_X в ряд -- высший приоритет
-                if (blockingTurnAi(i,j,3)) {
+                if (blockingTurnAi(i,j,1)) {
                     return;
                 }
                 // блокировка хода АИ, если стоят только 2 DOT_X ряд -- средний приоритет
@@ -146,35 +146,41 @@ public class Lesson4 {
 
     // блокировка хода компьютера , где number - кол-во в ряд DOT_X
     private static boolean blockingTurnAi(int i, int j, int number){
+        int zx = 0;
+
+        if (number == 1) {
+            zx = 2;
+        }
+
         // Блокировка по X
-        if (checkWinX(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
-            if (j + 2 < SIZE && map[i][j + 2] == DOT_EMPTY) {
-                map[i][j + 2] = DOT_O;
+        if (checkWinX(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
+            if (j + number + zx < SIZE && map[i][j + number + zx] == DOT_EMPTY) {
+                map[i][j + number + zx] = DOT_O;
                 return true;
-            } else if (j - 2 >= 0 && map[i][j - 2] == DOT_EMPTY) {
-                map[i][j - 2] = DOT_O;
+            } else if (j - number >= 0 && map[i][j - number] == DOT_EMPTY) {
+                map[i][j - number] = DOT_O;
                 return true;
             }
             // блокировка по Y
-        } else if (checkWinY(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
-            if (i + 2 < SIZE && map[i + 2][j] == DOT_EMPTY) {
-                map[i + 2][j] = DOT_O;
+        } else if (checkWinY(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
+            if (i + number + zx < SIZE && map[i + number + zx][j] == DOT_EMPTY) {
+                map[i + number + zx][j] = DOT_O;
                 return true;
-            } else if (i - 2 >= 0 && map[i + 2][j] == DOT_EMPTY) {
-                map[i - 2][j] = DOT_O;
+            } else if (i - number >= 0 && map[i - number][j] == DOT_EMPTY) {
+                map[i - number][j] = DOT_O;
                 return true;
             }
             // блокировка по диагонали слева на право
-        } else if (checkWinXYLeftRight(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
-            if (i + 2 < SIZE && j + 2 < SIZE && map[i + 2][j + 2] == DOT_EMPTY) {
-                map[i + 2][j + 2] = DOT_O;
+        } else if (checkWinXYLeftRight(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
+            if (i + number + zx < SIZE && j + number + zx < SIZE && map[i + number + zx][j + number + zx] == DOT_EMPTY) {
+                map[i + number + zx][j + number + zx] = DOT_O;
                 return true;
-            } else if (i - 2 >= 0 && j - 2 >= 0 && map[i - 2][j - 2] == DOT_EMPTY) {
-                map[i - 2][j - 2] = DOT_O;
+            } else if (i - number >= 0 && j - number >= 0 && map[i - number][j - number] == DOT_EMPTY) {
+                map[i - number][j - number] = DOT_O;
                 return true;
             }
             // блокировка по диагонали справа на лево
-        } else if (checkWinXYRightLeft(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
+        } else if (checkWinXYRightLeft(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
             if (i + 2 < SIZE && j - 2 >= 0 & map[i + 2][j - 2] == DOT_EMPTY) {
                 map[i + 2][j - 2] = DOT_O;
                 return true;
