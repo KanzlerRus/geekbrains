@@ -19,13 +19,13 @@ public class Lesson4 {
         printMap();
         while (true) {
             humanTurn();
-            if (checkWin(DOT_X)) {
+            if (checkWinGame(DOT_X)) {
                 System.out.println("Человек выиграл");
                 printMap();
                 break;
             }
             aiTurn();
-            if (checkWin(DOT_O)) {
+            if (checkWinGame(DOT_O)) {
                 System.out.println("Компьютер выиграл");
                 printMap();
                 break;
@@ -34,16 +34,55 @@ public class Lesson4 {
         }
     }
 
-    private static boolean checkWin(char symbol) {
+    private static boolean checkWinGame(char symbol) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                // проверка на победу по X и Y
-                if (map[i][j] == symbol) {
-                    return checkWinX(i,j,symbol) || checkWinY(i,j,symbol);
+                if (map[i][j] == symbol && checkWin(i,j,symbol)) {
+                    return true;
                 }
             }
         }
 
+        return false;
+    }
+
+    // проверка на победу по X и Y и диагонали
+    private static boolean checkWin(int i, int j, char symbol) {
+        return checkWinX(i, j, symbol) ||
+                checkWinY(i, j, symbol) ||
+                checkWinXYLeftRight(i, j, symbol) ||
+                checkWinXYRightLeft(i, j, symbol);
+    }
+
+    // проверка на победу по диагонали c права на лево
+    private static boolean checkWinXYRightLeft(int x, int y, char symbol) {
+        int counter = 0;
+        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+            if (x + i < SIZE && y - i >= 0 && map[x + i][y - i] == symbol) {
+                counter++;
+                if (counter == COUNTER_WIN_CHIPS) {
+                    return true;
+                }
+            } else {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+
+    // проверка на победу по диагонали слева на право
+    private static boolean checkWinXYLeftRight(int x, int y, char symbol) {
+        int counter = 0;
+        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+            if (x + i < SIZE && y + i < SIZE && map[x + i][y + i] == symbol) {
+                counter++;
+                if (counter == COUNTER_WIN_CHIPS) {
+                    return true;
+                }
+            } else {
+                counter = 0;
+            }
+        }
         return false;
     }
 
