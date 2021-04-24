@@ -53,11 +53,10 @@ public class Lesson3 {
     //[1][1], [2][2], ..., [n][n];
     private static void task4(int n) {
         int[][] array = new int[n][n];
+        int length = array[0].length - 1;
 
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = i == j ? 1 : (i + j == array[i].length - 1 ? 1 : 0);
-            }
+            array[i][i] = array[i][length - i] = 1;
         }
 
         System.out.println(Arrays.deepToString(array));
@@ -105,26 +104,35 @@ public class Lesson3 {
     // Задача №8 - со смещением элементов массива на n;
     private static void task8(int n, int... array) {
 
-        if (n >= 0) {
-            for (int j = 0; j < array.length - n; j++) {
-                for (int i = 0; i < array.length - 1; i++) {
-                    int temp = array[i + 1];
-                    array[i + 1] = array[i];
-                    array[i] = temp;
-                }
+        n = n % array.length;           // Оптимизация
+
+        if (n < 0) {
+            n = -n;
+            while (n != 0) {
+                leftShift(array);
+                n--;
             }
         } else {
-            n = -n;
-            for (int j = 0; j < n; j++) {
-                for (int i = 0; i < array.length - 1; i++) {
-                    int temp = array[i + 1];
-                    array[i + 1] = array[i];
-                    array[i] = temp;
-                }
+            while (n != 0) {
+                rightShift(array);
+                n--;
             }
         }
 
+
         System.out.println(Arrays.toString(array));
+    }
+
+    private static void rightShift(int[] array) {
+        int temp = array[array.length - 1];
+        System.arraycopy(array,0, array,1, array.length - 1);
+        array[0] = temp;
+    }
+
+    private static void leftShift(int[] array) {
+        int temp = array[0];
+        System.arraycopy(array, 1, array, 0, array.length - 1);
+        array[array.length - 1] = temp;
     }
 
 }
