@@ -5,8 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Lesson4 {
-    private static final int COUNTER_WIN_CHIPS = 3;         // кол-во фишек для победы
-    private static final int SIZE = 3;
+    private static final int COUNTER_WIN_CHIPS = 4;         // кол-во фишек для победы
+    private static final int SIZE = 10;
     private static final char DOT_X = 'X';
     private static final char DOT_O = 'O';
     private static final char DOT_EMPTY = '•';
@@ -35,46 +35,45 @@ public class Lesson4 {
     }
 
     private static boolean checkWin(char symbol) {
-
         for (int i = 0; i < SIZE; i++) {
-            int counterX = 0;       // счетичк по X
-            int counterY = 0;       // счетчик по Y
             for (int j = 0; j < SIZE; j++) {
-                // Подсчитываем кол-во по X
+                // проверка на победу по X и Y
                 if (map[i][j] == symbol) {
-                    counterX++;
-                    if (counterX == COUNTER_WIN_CHIPS) {
-                        return true;
-                    }
+                    return checkWinX(i,j,symbol) || checkWinY(i,j,symbol);
                 }
-                // Подсчитываем кол-во по Y
-                if (map[j][i] == symbol) {
-                    counterY++;
-                    if (counterY == COUNTER_WIN_CHIPS) {
-                        return true;
-                    }
+            }
+        }
+
+        return false;
+    }
+
+    // проверка на победу по Y
+    private static boolean checkWinY(int x, int y, char symbol) {
+        int counter = 0;
+        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+            if (x + i < SIZE && map[x + i][y] == symbol) {
+                counter++;
+                if (counter == COUNTER_WIN_CHIPS) {
+                    return true;
                 }
-                // Подсчитываем кол-во по диагонали
-                int counterLeftRight = 0;      // счетик по диагонали слева направо
-                int counterRightLeft = 0;      // счетик по диагонали справа налево
-                if (map[i][j] == symbol) {
-                    for (int k = 0; k < COUNTER_WIN_CHIPS; k++) {
-                        // Слева на право
-                        if (i + k < SIZE && j + k < SIZE && map[i + k][j + k] == symbol) {
-                            counterLeftRight++;
-                            if (counterLeftRight == COUNTER_WIN_CHIPS) {
-                                return true;
-                            }
-                        }
-                        // Справо на лево
-                        if (i + k < SIZE && j - k >= 0 && map[i + k][j - k] == symbol) {
-                            counterRightLeft++;
-                            if (counterRightLeft == COUNTER_WIN_CHIPS) {
-                                return true;
-                            }
-                        }
-                    }
+            } else {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+
+    // проверка на победу по X
+    private static boolean checkWinX(int x, int y, char symbol) {
+        int counter = 0;
+        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+            if (y + i < SIZE && map[x][y + i] == symbol) {
+                counter++;
+                if (counter == COUNTER_WIN_CHIPS) {
+                    return true;
                 }
+            } else {
+                counter = 0;
             }
         }
 
