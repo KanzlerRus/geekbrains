@@ -5,8 +5,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Lesson4 {
-    private static final int COUNTER_WIN_CHIPS = 4;         // кол-во фишек для победы
-    private static final int SIZE = 10;
+    private static final int COUNTER_WIN_CHIPS = 3;         // кол-во фишек для победы
+    private static final int SIZE = 3;
     private static final char DOT_X = 'X';
     private static final char DOT_O = 'O';
     private static final char DOT_EMPTY = '•';
@@ -34,40 +34,40 @@ public class Lesson4 {
         }
     }
 
-    private static boolean checkWin(char win) {
+    private static boolean checkWin(char symbol) {
 
         for (int i = 0; i < SIZE; i++) {
             int counterX = 0;       // счетичк по X
             int counterY = 0;       // счетчик по Y
-            int counterLeftRight = 0;      // счетик по диагонали слева направо
-            int counterRightLeft = 0;      // счетик по диагонали справа налево
             for (int j = 0; j < SIZE; j++) {
                 // Подсчитываем кол-во по X
-                if (map[i][j] == win) {
+                if (map[i][j] == symbol) {
                     counterX++;
                     if (counterX == COUNTER_WIN_CHIPS) {
                         return true;
                     }
                 }
                 // Подсчитываем кол-во по Y
-                if (map[j][i] == win) {
+                if (map[j][i] == symbol) {
                     counterY++;
                     if (counterY == COUNTER_WIN_CHIPS) {
                         return true;
                     }
                 }
                 // Подсчитываем кол-во по диагонали
-                if (map[i][j] == win) {
+                int counterLeftRight = 0;      // счетик по диагонали слева направо
+                int counterRightLeft = 0;      // счетик по диагонали справа налево
+                if (map[i][j] == symbol) {
                     for (int k = 0; k < COUNTER_WIN_CHIPS; k++) {
                         // Слева на право
-                        if (i + k < SIZE && j + k < SIZE && map[i + k][j + k] == win) {
+                        if (i + k < SIZE && j + k < SIZE && map[i + k][j + k] == symbol) {
                             counterLeftRight++;
                             if (counterLeftRight == COUNTER_WIN_CHIPS) {
                                 return true;
                             }
                         }
                         // Справо на лево
-                        if (i + k < SIZE && j - k >= 0 && map[i + k][j - k] == win) {
+                        if (i + k < SIZE && j - k >= 0 && map[i + k][j - k] == symbol) {
                             counterRightLeft++;
                             if (counterRightLeft == COUNTER_WIN_CHIPS) {
                                 return true;
@@ -75,10 +75,8 @@ public class Lesson4 {
                         }
                     }
                 }
-
             }
         }
-
 
         return false;
     }
