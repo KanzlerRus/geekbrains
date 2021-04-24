@@ -20,13 +20,17 @@ public class Lesson4 {
         while (true) {
             humanTurn();
             if (checkWinGame(DOT_X)) {
+                System.out.println("===============");
                 System.out.println("Человек выиграл");
+                System.out.println("===============");
                 printMap();
                 break;
             }
             aiTurn();
             if (checkWinGame(DOT_O)) {
+                System.out.println("=================");
                 System.out.println("Компьютер выиграл");
+                System.out.println("=================");
                 printMap();
                 break;
             }
@@ -37,30 +41,29 @@ public class Lesson4 {
     private static boolean checkWinGame(char symbol) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                if (map[i][j] == symbol && checkWin(i,j,symbol)) {
+                if (map[i][j] == symbol && checkWin(i, j, symbol)) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
     // проверка на победу по X и Y и диагонали
     private static boolean checkWin(int i, int j, char symbol) {
-        return checkWinX(i, j, symbol) ||
-                checkWinY(i, j, symbol) ||
-                checkWinXYLeftRight(i, j, symbol) ||
-                checkWinXYRightLeft(i, j, symbol);
+        return checkWinX(i, j, symbol, COUNTER_WIN_CHIPS) ||
+                checkWinY(i, j, symbol, COUNTER_WIN_CHIPS) ||
+                checkWinXYLeftRight(i, j, symbol, COUNTER_WIN_CHIPS) ||
+                checkWinXYRightLeft(i, j, symbol, COUNTER_WIN_CHIPS);
     }
 
     // проверка на победу по диагонали c права на лево
-    private static boolean checkWinXYRightLeft(int x, int y, char symbol) {
+    private static boolean checkWinXYRightLeft(int x, int y, char symbol, int number) {
         int counter = 0;
-        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+        for (int i = 0; i < number; i++) {
             if (x + i < SIZE && y - i >= 0 && map[x + i][y - i] == symbol) {
                 counter++;
-                if (counter == COUNTER_WIN_CHIPS) {
+                if (counter == number) {
                     return true;
                 }
             } else {
@@ -71,12 +74,12 @@ public class Lesson4 {
     }
 
     // проверка на победу по диагонали слева на право
-    private static boolean checkWinXYLeftRight(int x, int y, char symbol) {
+    private static boolean checkWinXYLeftRight(int x, int y, char symbol, int number) {
         int counter = 0;
-        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+        for (int i = 0; i < number; i++) {
             if (x + i < SIZE && y + i < SIZE && map[x + i][y + i] == symbol) {
                 counter++;
-                if (counter == COUNTER_WIN_CHIPS) {
+                if (counter == number) {
                     return true;
                 }
             } else {
@@ -87,12 +90,12 @@ public class Lesson4 {
     }
 
     // проверка на победу по Y
-    private static boolean checkWinY(int x, int y, char symbol) {
+    private static boolean checkWinY(int x, int y, char symbol, int number) {
         int counter = 0;
-        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+        for (int i = 0; i < number; i++) {
             if (x + i < SIZE && map[x + i][y] == symbol) {
                 counter++;
-                if (counter == COUNTER_WIN_CHIPS) {
+                if (counter == number) {
                     return true;
                 }
             } else {
@@ -103,23 +106,64 @@ public class Lesson4 {
     }
 
     // проверка на победу по X
-    private static boolean checkWinX(int x, int y, char symbol) {
+    private static boolean checkWinX(int x, int y, char symbol, int number) {
         int counter = 0;
-        for (int i = 0; i < COUNTER_WIN_CHIPS; i++) {
+        for (int i = 0; i < number; i++) {
             if (y + i < SIZE && map[x][y + i] == symbol) {
                 counter++;
-                if (counter == COUNTER_WIN_CHIPS) {
+                if (counter == number) {
                     return true;
                 }
             } else {
                 counter = 0;
             }
         }
-
         return false;
     }
 
     private static void aiTurn() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                // Блокировка по X
+                if (checkWinX(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
+                    if (j + 2 < SIZE && map[i][j + 2] == DOT_EMPTY) {
+                        map[i][j + 2] = DOT_O;
+                        return;
+                    } else if (j - 2 >= 0 && map[i][j - 2] == DOT_EMPTY) {
+                        map[i][j - 2] = DOT_O;
+                        return;
+                    }
+                    // блокировка по Y
+                } else if (checkWinY(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
+                    if (i + 2 < SIZE && map[i + 2][j] == DOT_EMPTY) {
+                        map[i + 2][j] = DOT_O;
+                        return;
+                    } else if (i - 2 >= 0 && map[i + 2][j] == DOT_EMPTY) {
+                        map[i - 2][j] = DOT_O;
+                        return;
+                    }
+                    // блокировка по диагонали слева на право
+                } else if (checkWinXYLeftRight(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
+                    if (i + 2 < SIZE && j + 2 < SIZE && map[i + 2][j + 2] == DOT_EMPTY) {
+                        map[i + 2][j + 2] = DOT_O;
+                        return;
+                    } else if (i - 2 >= 0 && j - 2 >= 0 && map[i - 2][j - 2] == DOT_EMPTY) {
+                        map[i - 2][j - 2] = DOT_O;
+                        return;
+                    }
+                    // блокировка по диагонали справа на лево
+                } else if (checkWinXYRightLeft(i, j, DOT_X, COUNTER_WIN_CHIPS - 2)) {
+                    if (i + 2 < SIZE && j - 2 >= 0 & map[i + 2][j - 2] == DOT_EMPTY) {
+                        map[i + 2][j - 2] = DOT_O;
+                        return;
+                    } else if (i - 2 <= 0 && j + 2 < SIZE && map[i - 2][j + 2] == DOT_EMPTY) {
+                        map[i - 2][j + 2] = DOT_O;
+                        return;
+                    }
+                }
+            }
+        }
+
         int x;
         int y;
         do {
