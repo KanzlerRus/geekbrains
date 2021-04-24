@@ -5,12 +5,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Lesson4 {
-    private static final int COUNTER_WIN_CHIPS = 4;         // кол-во фишек для победы
-    private static final int SIZE = 10;
-    private static final char DOT_X = 'X';
-    private static final char DOT_O = 'O';
-    private static final char DOT_EMPTY = '•';
-    private static final char[][] map = new char[SIZE][SIZE];
+    private static final int COUNTER_WIN_CHIPS = 4;                 // кол-во фишек для победы
+    private static final int SIZE = 10;                             // размер поля
+    private static final char DOT_X = 'X';                          // фишки человека
+    private static final char DOT_O = 'O';                          // фишки копьютера
+    private static final char DOT_EMPTY = '•';                      // пустое поле
+    private static final char[][] map = new char[SIZE][SIZE];       // размер поля
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
 
