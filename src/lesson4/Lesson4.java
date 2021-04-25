@@ -22,7 +22,6 @@ public class Lesson4 {
         initMap();
         greeting();
         printMap();
-
         while (true) {
             humanTurn();
             if (checkWinGame(DOT_X)) {
@@ -184,6 +183,7 @@ public class Lesson4 {
         map[x][y] = DOT_O;
     }
 
+    // TODO : дореализовать алгоритм,чтобы он срабатывал корректно при любом кол-ве COUNTER_WIN_CHIPS
     // блокировка хода компьютера , где number - кол-во в ряд DOT_X
     private static boolean blockingTurnAi(int i, int j, int number) {
         int zx = 0;         // дополнительный параметр корректировки для кол-ва DOT_X = 3
