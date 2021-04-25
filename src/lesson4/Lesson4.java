@@ -7,6 +7,11 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Игра крестики-нолики на безразмерном поле
+ * @author Николай Краснов
+ * @version 1.0
+ */
 public class Lesson4 {
     private static final int COUNTER_WIN_CHIPS = 4;                 // кол-во фишек для победы
     private static final int SIZE = 10;                             // размер поля
@@ -43,7 +48,11 @@ public class Lesson4 {
         }
     }
 
-    private static void saveGame(){
+    /**
+     * Метод для сохранения игры в файл
+     * @param file - файл для сохранения игры
+     */
+    private static void saveGame(File file){
         try(PrintWriter printWriter = new PrintWriter(file)){
             for(char[] array : map) {
                 for (char el : array) {
@@ -59,7 +68,11 @@ public class Lesson4 {
         System.out.println("==============");
     }
 
-    private static void loadGame(){
+    /**
+     * Метод для загрузки игры из файла
+     * @param file - файл из которого игра загружается
+     */
+    private static void loadGame(File file){
         try(Scanner scFile = new Scanner(file)){
             for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
@@ -72,6 +85,9 @@ public class Lesson4 {
         printMap();
     }
 
+    /**
+     * Метод выводящий приветсвие
+     */
     private static void greeting() {
         System.out.println("=========================================================");
         System.out.println("Программа так же поддерживает сохранение партии в файл txt\n" +
@@ -81,6 +97,11 @@ public class Lesson4 {
         System.out.println("=========================================================");
     }
 
+    /**
+     * Метод проверки выигрышной комбинации
+     * @param symbol - символ фишки,по которым в методе идет проверка на нахождение выигрышной комбинации
+     * @return - возварщает true - если выигрышная комбинация найдена; false - если выигрышная комбинация не найднеа
+     */
     private static boolean checkWinGame(char symbol) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -92,7 +113,13 @@ public class Lesson4 {
         return false;
     }
 
-    // проверка на победу по X и Y и диагонали
+    /**
+     *
+     * @param i - координата по X
+     * @param j - координата по Y
+     * @param symbol - сивол фишки
+     * @return - true - если выигрышная комбинация найдена; false - если выгрышная комбинация не найдена
+     */
     private static boolean checkWin(int i, int j, char symbol) {
         return checkWinX(i, j, symbol, COUNTER_WIN_CHIPS) ||
                 checkWinY(i, j, symbol, COUNTER_WIN_CHIPS) ||
@@ -100,7 +127,14 @@ public class Lesson4 {
                 checkWinXYRightLeft(i, j, symbol, COUNTER_WIN_CHIPS);
     }
 
-    // проверка на победу по диагонали c права на лево
+    /**
+     * Метод который ищет комбинацию состоящую из number фишек по диагонали справа налево
+     * @param x - координаты по X
+     * @param y - координаты по Y
+     * @param symbol  - сивол фишки
+     * @param number - кол-во фишек в диагонали
+     * @return - true - если комбинация найдена; false - если комбинация не найдена
+     */
     private static boolean checkWinXYRightLeft(int x, int y, char symbol, int number) {
         int counter = 0;
         for (int i = 0; i < number; i++) {
@@ -116,7 +150,14 @@ public class Lesson4 {
         return false;
     }
 
-    // проверка на победу по диагонали слева на право
+    /**
+     * Метод который ищет комбинацию состоящую из number фишек по диагонали слева направо
+     * @param x  - координаты по X
+     * @param y - координаты по Y
+     * @param symbol - сивол фишки
+     * @param number - кол-во фишек в диагонали
+     * @return - true - если комбинация найдена; false - если комбинация не найдена
+     */
     private static boolean checkWinXYLeftRight(int x, int y, char symbol, int number) {
         int counter = 0;
         for (int i = 0; i < number; i++) {
@@ -132,7 +173,14 @@ public class Lesson4 {
         return false;
     }
 
-    // проверка на победу по Y
+    /**
+     * Метод который ищет комбинацию состоящую из number фишек по оси Y
+     * @param x - координаты по X
+     * @param y -- координаты по Y
+     * @param symbol - сивол фишки
+     * @param number - - кол-во фишек в диагонали
+     * @return - true - если комбинация найдена; false - если комбинация не найдена
+     */
     private static boolean checkWinY(int x, int y, char symbol, int number) {
         int counter = 0;
         for (int i = 0; i < number; i++) {
@@ -148,7 +196,14 @@ public class Lesson4 {
         return false;
     }
 
-    // проверка на победу по X
+    /**
+     * Метод который ищет комбинацию состоящую из number фишек по оси X
+     * @param x - координаты по X
+     * @param y -- координаты по Y
+     * @param symbol - сивол фишки
+     * @param number - - кол-во фишек в диагонали
+     * @return - true - если комбинация найдена; false - если комбинация не найдена
+     */
     private static boolean checkWinX(int x, int y, char symbol, int number) {
         int counter = 0;
         for (int i = 0; i < number; i++) {
@@ -164,14 +219,17 @@ public class Lesson4 {
         return false;
     }
 
+    /**
+     * Метод который отвечает за ход компютера
+     */
     private static void aiTurn() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                // блокировка хода АИ , если уже стоят 3 DOT_X в ряд -- высший приоритет
+                // блокировка хода от АИ , если уже стоят 3 DOT_X в ряд -- высший приоритет
                 if (blockingTurnAi(i, j, 1)) {
                     return;
                 }
-                // блокировка хода АИ, если стоят только 2 DOT_X ряд -- средний приоритет
+                // блокировка хода от АИ, если стоят только 2 DOT_X ряд -- средний приоритет
                 if (blockingTurnAi(i, j, 2)) {
                     return;
                 }
@@ -237,6 +295,9 @@ public class Lesson4 {
         return false;
     }
 
+    /**
+     * Метод позволяет ввести координаты новой точки или сохранить/загрузить игру
+     */
     private static void humanTurn() {
         int x = -1;
         int y = -1;
@@ -248,9 +309,9 @@ public class Lesson4 {
             System.out.println("=======================================");
             String str = scanner.nextLine();
             if (str.contains("save")) {
-                saveGame();
+                saveGame(file);
             }else if (str.contains("load")) {
-                loadGame();
+                loadGame(file);
             } else {
                 String[] xy = str.split(" ",2);
                 if(xy[0].matches("[^0-9]") || xy[1].matches("[^0-9]")) {
@@ -267,17 +328,29 @@ public class Lesson4 {
 
     }
 
+    /**
+     * Метод который проверяет возможность поставить в ячейку(x,y) крестик или нолик на поле
+     * @param x - - координаты по X
+     * @param y -- координаты по Y
+     * @return возвращает true - если можно поставить в данную ячейку можно; false - если поставить нельзя
+     */
     private static boolean isCellValid(int x, int y) {
         if (x < 0 || y < 0 || x >= SIZE || y >= SIZE) return false;
         else return map[x][y] == DOT_EMPTY;
     }
 
+    /**
+     * Метод заоплняет игровое поле начальными значениям (DOT_EMPTY)
+     */
     private static void initMap() {
         for (char[] el : map) {
             Arrays.fill(el, DOT_EMPTY);
         }
     }
 
+    /**
+     * Метод отвечающий за вывод игрового поля в консоль
+     */
     private static void printMap() {
         printHeader();
         printBody();
