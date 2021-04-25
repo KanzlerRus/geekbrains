@@ -54,6 +54,9 @@ public class Lesson4 {
         }catch (FileNotFoundException ex) {
             System.err.println("Произошла ошибка!Не возможно сохранить в файл");
         }
+        System.out.println("==============");
+        System.out.println("Игра сохранена");
+        System.out.println("==============");
     }
 
     private static void loadGame(){
@@ -66,6 +69,7 @@ public class Lesson4 {
         }catch (FileNotFoundException ex) {
             System.err.println("Файл не возможно сохранить");
         }
+        printMap();
     }
 
     private static void greeting() {
@@ -234,12 +238,30 @@ public class Lesson4 {
     }
 
     private static void humanTurn() {
-        int x;
-        int y;
+        int x = -1;
+        int y = -1;
         do {
+            System.out.println("=======================================");
             System.out.println("Введите координаты X и Y");
-            x = scanner.nextInt() - 1;
-            y = scanner.nextInt() - 1;
+            System.out.println("Или введите save - для сохранения игры");
+            System.out.println("Или введите load - для загрузки игры");
+            System.out.println("=======================================");
+            String str = scanner.nextLine();
+            if (str.contains("save")) {
+                saveGame();
+            }else if (str.contains("load")) {
+                loadGame();
+            } else {
+                String[] xy = str.split(" ",2);
+                if(xy[0].matches("[^0-9]") || xy[1].matches("[^0-9]")) {
+                    x = Integer.parseInt(xy[0]) - 1;
+                    y = Integer.parseInt(xy[1]) - 1;
+                } else {
+                    System.out.println("=============================");
+                    System.out.println("Введите корректные координаты");
+                    System.out.println("=============================");
+                }
+            }
         } while (!isCellValid(x, y));
         map[x][y] = DOT_X;
 
