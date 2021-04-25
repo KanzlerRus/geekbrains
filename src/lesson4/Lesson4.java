@@ -53,13 +53,18 @@ public class Lesson4 {
      * @param file - файл для сохранения игры
      */
     private static void saveGame(File file){
-        try(PrintWriter printWriter = new PrintWriter(file)){
-            for(char[] array : map) {
-                for (char el : array) {
-                    printWriter.print(el + " ");
-                }
-                printWriter.println();
+        // Записываем массив в строку
+        StringBuilder stringBuilder = new StringBuilder();
+        for(char[] array : map) {
+            for (char el : array) {
+                stringBuilder.append(el).append(" ");
             }
+            stringBuilder.append("\n");
+        }
+
+        // Записываем строку в файл
+        try(PrintWriter printWriter = new PrintWriter(file)){
+            printWriter.println(stringBuilder);
         }catch (FileNotFoundException ex) {
             System.err.println("Произошла ошибка!Не возможно сохранить в файл");
         }
@@ -245,7 +250,6 @@ public class Lesson4 {
         map[x][y] = DOT_O;
     }
 
-    // TODO : дореализовать алгоритм,чтобы он срабатывал корректно при любом кол-ве COUNTER_WIN_CHIPS
     // блокировка хода компьютера , где number - кол-во в ряд DOT_X
     private static boolean blockingTurnAi(int i, int j, int number) {
         int zx = 0;         // дополнительный параметр корректировки для кол-ва DOT_X = 3
@@ -282,7 +286,6 @@ public class Lesson4 {
                 return true;
             }
             // блокировка по диагонали справа на лево
-            // TODO : исправить код
         } else if (checkWinXYRightLeft(i, j, DOT_X, COUNTER_WIN_CHIPS - number)) {
             if (i + number + zx < SIZE && j - number - zx >= 0 & map[i + number + zx][j - number - zx] == DOT_EMPTY) {
                 map[i + number + zx][j - number - zx] = DOT_O;
@@ -314,7 +317,7 @@ public class Lesson4 {
                 loadGame(file);
             } else {
                 String[] xy = str.split(" ",2);
-                if(xy[0].matches("[^0-9]") || xy[1].matches("[^0-9]")) {
+                if(xy[0].matches("\\d+") && xy[1].matches("\\d+")) {
                     x = Integer.parseInt(xy[0]) - 1;
                     y = Integer.parseInt(xy[1]) - 1;
                 } else {
