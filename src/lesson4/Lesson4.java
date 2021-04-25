@@ -1,5 +1,8 @@
 package lesson4;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,10 +16,13 @@ public class Lesson4 {
     private static final char[][] map = new char[SIZE][SIZE];       // размер поля
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
+    private static final File file = new File("src/lesson4/save.txt");      // файл с сохранением игры
 
     public static void main(String[] args) {
         initMap();
+        greeting();
         printMap();
+
         while (true) {
             humanTurn();
             if (checkWinGame(DOT_X)) {
@@ -36,6 +42,40 @@ public class Lesson4 {
             }
             printMap();
         }
+    }
+
+    private static void saveGame(){
+        try(PrintWriter printWriter = new PrintWriter(file)){
+            for(char[] array : map) {
+                for (char el : array) {
+                    printWriter.print(el + " ");
+                }
+                printWriter.println();
+            }
+        }catch (FileNotFoundException ex) {
+            System.err.println("Произошла ошибка!Не возможно сохранить в файл");
+        }
+    }
+
+    private static void loadGame(){
+        try(Scanner scFile = new Scanner(file)){
+            for (int i = 0; i < SIZE; i++) {
+                for (int j = 0; j < SIZE; j++) {
+                    map[i][j] = scFile.next().charAt(0);
+                }
+            }
+        }catch (FileNotFoundException ex) {
+            System.err.println("Файл не возможно сохранить");
+        }
+    }
+
+    private static void greeting() {
+        System.out.println("=========================================================");
+        System.out.println("Программа так же поддерживает сохранение партии в файл txt\n" +
+                "и загрузку сохранения из файла. Для того,чтобы сохраниять \n" +
+                "партию введите в консоль save для загрузки партии из файла txt\n" +
+                " введитев консоль load");
+        System.out.println("=========================================================");
     }
 
     private static boolean checkWinGame(char symbol) {
@@ -125,11 +165,11 @@ public class Lesson4 {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 // блокировка хода АИ , если уже стоят 3 DOT_X в ряд -- высший приоритет
-                if (blockingTurnAi(i,j,1)) {
+                if (blockingTurnAi(i, j, 1)) {
                     return;
                 }
                 // блокировка хода АИ, если стоят только 2 DOT_X ряд -- средний приоритет
-                if (blockingTurnAi(i,j,2)) {
+                if (blockingTurnAi(i, j, 2)) {
                     return;
                 }
             }
@@ -145,7 +185,7 @@ public class Lesson4 {
     }
 
     // блокировка хода компьютера , где number - кол-во в ряд DOT_X
-    private static boolean blockingTurnAi(int i, int j, int number){
+    private static boolean blockingTurnAi(int i, int j, int number) {
         int zx = 0;         // дополнительный параметр корректировки для кол-ва DOT_X = 3
 
         if (number == 1) {
