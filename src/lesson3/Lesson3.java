@@ -125,7 +125,7 @@ public class Lesson3 {
 
     private static void rightShift(int[] array) {
         int temp = array[array.length - 1];
-        System.arraycopy(array,0, array,1, array.length - 1);
+        System.arraycopy(array, 0, array, 1, array.length - 1);
         array[0] = temp;
     }
 

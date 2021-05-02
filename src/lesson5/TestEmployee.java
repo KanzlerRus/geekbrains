@@ -50,7 +50,7 @@ public class TestEmployee {
                 employee5
         };
 
-        for(Employee el : employees) {
+        for (Employee el : employees) {
             if (el.getAge() >= 40) {
                 System.out.println(el);
             }

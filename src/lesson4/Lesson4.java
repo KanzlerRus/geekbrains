@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 /**
  * Игра крестики-нолики на безразмерном поле
+ *
  * @author Николай Краснов
  * @version 1.0
  */
@@ -50,12 +51,13 @@ public class Lesson4 {
 
     /**
      * Метод для сохранения игры в файл
+     *
      * @param file - файл для сохранения игры
      */
-    private static void saveGame(File file){
+    private static void saveGame(File file) {
         // Записываем массив в строку
         StringBuilder stringBuilder = new StringBuilder();
-        for(char[] array : map) {
+        for (char[] array : map) {
             for (char el : array) {
                 stringBuilder.append(el).append(" ");
             }
@@ -63,9 +65,9 @@ public class Lesson4 {
         }
 
         // Записываем строку в файл
-        try(PrintWriter printWriter = new PrintWriter(file)){
+        try (PrintWriter printWriter = new PrintWriter(file)) {
             printWriter.println(stringBuilder);
-        }catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.err.println("Произошла ошибка!Не возможно сохранить в файл");
         }
         System.out.println("==============");
@@ -75,16 +77,17 @@ public class Lesson4 {
 
     /**
      * Метод для загрузки игры из файла
+     *
      * @param file - файл из которого игра загружается
      */
-    private static void loadGame(File file){
-        try(Scanner scFile = new Scanner(file)){
+    private static void loadGame(File file) {
+        try (Scanner scFile = new Scanner(file)) {
             for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
                     map[i][j] = scFile.next().charAt(0);
                 }
             }
-        }catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.err.println("Файл не возможно сохранить");
         }
         printMap();
@@ -104,6 +107,7 @@ public class Lesson4 {
 
     /**
      * Метод проверки выигрышной комбинации
+     *
      * @param symbol - символ фишки,по которым в методе идет проверка на нахождение выигрышной комбинации
      * @return - возварщает true - если выигрышная комбинация найдена; false - если выигрышная комбинация не найднеа
      */
@@ -119,9 +123,8 @@ public class Lesson4 {
     }
 
     /**
-     *
-     * @param i - координата по X
-     * @param j - координата по Y
+     * @param i      - координата по X
+     * @param j      - координата по Y
      * @param symbol - сивол фишки
      * @return - true - если выигрышная комбинация найдена; false - если выгрышная комбинация не найдена
      */
@@ -134,9 +137,10 @@ public class Lesson4 {
 
     /**
      * Метод который ищет комбинацию состоящую из number фишек по диагонали справа налево
-     * @param x - координаты по X
-     * @param y - координаты по Y
-     * @param symbol  - сивол фишки
+     *
+     * @param x      - координаты по X
+     * @param y      - координаты по Y
+     * @param symbol - сивол фишки
      * @param number - кол-во фишек в диагонали
      * @return - true - если комбинация найдена; false - если комбинация не найдена
      */
@@ -157,8 +161,9 @@ public class Lesson4 {
 
     /**
      * Метод который ищет комбинацию состоящую из number фишек по диагонали слева направо
-     * @param x  - координаты по X
-     * @param y - координаты по Y
+     *
+     * @param x      - координаты по X
+     * @param y      - координаты по Y
      * @param symbol - сивол фишки
      * @param number - кол-во фишек в диагонали
      * @return - true - если комбинация найдена; false - если комбинация не найдена
@@ -180,8 +185,9 @@ public class Lesson4 {
 
     /**
      * Метод который ищет комбинацию состоящую из number фишек по оси Y
-     * @param x - координаты по X
-     * @param y -- координаты по Y
+     *
+     * @param x      - координаты по X
+     * @param y      -- координаты по Y
      * @param symbol - сивол фишки
      * @param number - - кол-во фишек в диагонали
      * @return - true - если комбинация найдена; false - если комбинация не найдена
@@ -203,8 +209,9 @@ public class Lesson4 {
 
     /**
      * Метод который ищет комбинацию состоящую из number фишек по оси X
-     * @param x - координаты по X
-     * @param y -- координаты по Y
+     *
+     * @param x      - координаты по X
+     * @param y      -- координаты по Y
      * @param symbol - сивол фишки
      * @param number - - кол-во фишек в диагонали
      * @return - true - если комбинация найдена; false - если комбинация не найдена
@@ -313,11 +320,11 @@ public class Lesson4 {
             String str = scanner.nextLine();
             if (str.contains("save")) {
                 saveGame(file);
-            }else if (str.contains("load")) {
+            } else if (str.contains("load")) {
                 loadGame(file);
             } else {
-                String[] xy = str.split(" ",2);
-                if(xy[0].matches("\\d+") && xy[1].matches("\\d+")) {
+                String[] xy = str.split(" ", 2);
+                if (xy[0].matches("\\d+") && xy[1].matches("\\d+")) {
                     x = Integer.parseInt(xy[0]) - 1;
                     y = Integer.parseInt(xy[1]) - 1;
                 } else {
@@ -333,6 +340,7 @@ public class Lesson4 {
 
     /**
      * Метод который проверяет возможность поставить в ячейку(x,y) крестик или нолик на поле
+     *
      * @param x - - координаты по X
      * @param y -- координаты по Y
      * @return возвращает true - если можно поставить в данную ячейку можно; false - если поставить нельзя
