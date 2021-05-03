@@ -14,7 +14,7 @@ abstract class Animal {
         return counterAnimal;
     }
 
-    protected abstract void run(int length);
+    abstract void run(int length);
 
-    protected abstract void swim(int length);
+    abstract void swim(int length);
 }

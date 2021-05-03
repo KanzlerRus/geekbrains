@@ -1,6 +1,6 @@
 package lesson6;
 
-class Dog extends Animal {
+final class Dog extends Animal {
 
     private static int counterDog;
 
