@@ -4,8 +4,8 @@ public class Cat extends Animal {
 
     private static int counterCat;
 
-    public Cat() {
-        super();
+    public Cat(String name) {
+        super(name);
         counterCat++;
     }
 
@@ -16,15 +16,15 @@ public class Cat extends Animal {
     @Override
     public void run(int length) {
         if (length > 200) {
-            System.out.println("Кот не может пробежать больше 200м.");
+            System.out.printf("Кот: %s не может пробежать больше 200м.\n", this.name);
         } else {
-            System.out.printf("Кот пробежал: %d\n", length);
+            System.out.printf("Кот: %s пробежал: %d\n", this.name, length);
         }
     }
 
     @Override
     public void swim(int length) {
-        System.out.println("Кот не умеет плавать");
+        System.out.printf("Кот: %s не умеет плавать\n", this.name);
     }
 
 

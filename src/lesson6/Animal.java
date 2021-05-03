@@ -3,8 +3,10 @@ package lesson6;
 abstract class Animal {
 
     private static int counterAnimal;
+    protected String name;
 
-    public Animal() {
+    public Animal(String name) {
+        this.name = name;
         counterAnimal++;
     }
 

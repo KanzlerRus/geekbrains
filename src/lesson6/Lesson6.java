@@ -8,10 +8,10 @@ class Lesson6 {
     public static void main(String[] args) {
 
         Animal[] animals = {
-                new Cat(),
-                new Cat(),
-                new Cat(),
-                new Dog(),
+                new Cat("Барсик"),
+                new Cat("Алиса"),
+                new Cat("Том"),
+                new Dog("Муму"),
         };
 
         for (Animal animal : animals) {
