@@ -3,8 +3,8 @@ package lesson7;
 class Main {
     public static void main(String[] args) {
         Cat[] cats = {
-                new Cat("Barsik",20),
-                new Cat("Tom",30),
+                new Cat("Barsik", 20),
+                new Cat("Tom", 30),
                 new Cat("Alica", 40)
         };
 

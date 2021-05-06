@@ -16,7 +16,7 @@ public class Cat {
         if (appetite > p.getFood() && !satiety) {
             System.out.println("В миске не достаточно еды");
         } else {
-            System.out.println("Кот("+ name +") + начал есть!");
+            System.out.println("Кот(" + name + ") + начал есть!");
             p.decreasedFood(appetite);
             satiety = true;
         }
@@ -24,6 +24,6 @@ public class Cat {
 
     public void info() {
         String str = !satiety ? "голоден" : "сыт";
-        System.out.println("Сытость кота("+ name +") : " + str);
+        System.out.println("Сытость кота(" + name + ") : " + str);
     }
 }
