@@ -1,4 +1,4 @@
-package lesson4;
+package level1.lesson4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +22,7 @@ public class Lesson4 {
     private static final char[][] map = new char[SIZE][SIZE];       // размер поля
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
-    private static final File file = new File("src/lesson4/save.txt");      // файл с сохранением игры
+    private static final File file = new File("src/level1.lesson4/save.txt");      // файл с сохранением игры
 
     public static void main(String[] args) {
         initMap();

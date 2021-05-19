@@ -1,4 +1,4 @@
-package lesson5;
+package level1.lesson5;
 
 public class Employee {
     private String name;

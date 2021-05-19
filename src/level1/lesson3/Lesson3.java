@@ -1,4 +1,4 @@
-package lesson3;
+package level1.lesson3;
 
 import java.util.Arrays;
 

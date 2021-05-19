@@ -1,4 +1,4 @@
-package lesson7;
+package level1.lesson7;
 
 class Main {
     public static void main(String[] args) {
