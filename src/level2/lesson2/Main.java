@@ -10,7 +10,7 @@ public class Main {
         String[][] array = {
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
-                {"9", "10", "11", "12"},
+                {"9", "10", "11", "1d"},
                 {"13", "14", "15", "16"}
         };
 
@@ -20,6 +20,10 @@ public class Main {
                 System.out.println(Arrays.toString(el));
             }
         } catch (MyArrayDataException | MyArraySizeException ex) {
+            for (String[] el : array) {
+                System.out.println(Arrays.toString(el));
+            }
+            System.out.println();
             System.out.println(ex.getMessage());
         }
     }
@@ -36,7 +40,7 @@ public class Main {
                 try {
                     intArray[i][j] = Integer.parseInt(array[i][j]);
                 } catch (NumberFormatException ex) {
-                    throw new MyArrayDataException(i, j);
+                    throw new MyArrayDataException(++i, ++j);
                 }
             }
         }
