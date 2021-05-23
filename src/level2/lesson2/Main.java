@@ -46,7 +46,7 @@ public class Main {
         return intArray;
     }
 
-    private static int toIntValue(String value, int i, int j) {
+    private static int toIntValue(String value, int i, int j) throws MyArrayDataException {
         if (!value.matches("\\d+")) {
             throw new MyArrayDataException(++i, ++j);
         }
