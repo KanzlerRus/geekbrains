@@ -15,7 +15,7 @@ public class Main {
         };
 
         try {
-            int[][] intArray = toInt(array);
+            int[][] intArray = toIntArray(array);
             for (int[] el : intArray) {
                 System.out.println(Arrays.toString(el));
             }
@@ -29,9 +29,9 @@ public class Main {
     }
 
 
-    private static int[][] toInt(String[][] array) throws MyArraySizeException, MyArrayDataException {
+    private static int[][] toIntArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
 
-        if(!checkValidSize(array)) {
+        if (!checkValidSize(array)) {
             throw new MyArraySizeException();
         }
 
@@ -39,25 +39,28 @@ public class Main {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                    if (array[i][j].matches("\\d")) {
-                        intArray[i][j] = Integer.parseInt(array[i][j]);
-                    } else {
-                        throw new MyArrayDataException(++i, ++j);
-                    }
+                intArray[i][j] = toIntValue(array[i][j], i , j);
             }
         }
 
         return intArray;
     }
 
+    private static int toIntValue(String value, int i, int j) {
+        if (!value.matches("\\d+")) {
+            throw new MyArrayDataException(++i, ++j);
+        }
+        return Integer.parseInt(value);
+    }
+
     private static boolean checkValidSize(String[][] array) throws MyArraySizeException {
         if (array.length != 4) {
-           return false;
+            return false;
         }
 
         for (String[] el : array) {
             if (el.length != 4) {
-               return false;
+                return false;
             }
         }
         return true;
